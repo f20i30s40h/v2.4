@@ -1,10 +1,11 @@
-local GS = function(...)
+local Configs = {}
+function Configs:GS(...)
   return game:GetService(...)
 end
-local RS = function(callback)
+function Configs:RS(callback)
   return game["Run Service"].Heartbeat.Connect(callback)
 end
-local ESP = function(Thing, color, text, Num, OnOff)
+function Configs:ESP(Thing, color, text, Num, OnOff)
   if not Thing:FindFirstChild("Highlight") then
     local HL = Instance.new("Highlight", Thing)
     HL.FillColor = color
@@ -28,6 +29,4 @@ local ESP = function(Thing, color, text, Num, OnOff)
     Thing.BillboardGui.Enabled = OnOff
   end
 end
-local PLR = GS("Players")
-local LP = PLR.LocalPlayer
-return(GS, RS, ESP, PLR, LP)
+return Configs
