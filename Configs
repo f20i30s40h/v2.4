@@ -1,0 +1,33 @@
+local GS = function(...)
+  return game:GetService(...)
+end
+local RS = function(callback)
+  return game["Run Service"].Heartbeat.Connect(callback)
+end
+local ESP = function(Thing, color, text, Num, OnOff)
+  if not Thing:FindFirstChild("Highlight") then
+    local HL = Instance.new("Highlight", Thing)
+    HL.FillColor = color
+    HL.Enabled = OnOff
+   else
+    Thing.Highlight.Enabled = OnOff
+  end
+  if not Thing:FindFirstChild("BillboardGui") then
+    local BG = Instance.new("BillboardGui", Thing)
+    BG.AlwaysOnTop = true
+    BG.Size = UDim2.new(0, 100, 0, 50)
+    BG.StudsOffset = Vector3.new(0, Num, 0)
+    BG.Enabled = OnOff
+    local TL = Instance.new("TextLabel", BG)
+    TL.Text = text
+    TL.BackgroundTransparency = 1
+    TL.Size = UDim2.new(0, 100, 0, 50)
+    TL.TextColor3 = Color3.fromRGB(255, 255, 255)
+    TL.TextWrapped = true
+   else
+    Thing.BillboardGui.Enabled = OnOff
+  end
+end
+local PLR = GS("Players")
+local LP = PLR.LocalPlayer
+return(GS, RS, ESP, PLR, LP)
