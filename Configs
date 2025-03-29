@@ -1,9 +1,47 @@
+
 local Configs = {}
 function Configs:GS(...)
   return game:GetService(...)
 end
 function Configs:RS(callback)
   return game["Run Service"].Heartbeat.Connect(callback)
+end
+function Configs:AddESP(part, color, text, enabled)
+  local hl = part:FindFirstChild("HL")
+  local bg = part:FindFirstChild("BG")
+  if not hl then
+    local HL = Instance.new("Highlight", part)
+    HL.Name = "HL"
+    HL.FillColor = color
+    HL.Enabled = enabled
+   else
+    local HL = hl
+    HL.Enabled = enabled
+    HL.FillColor = color
+  end
+  if not bg then
+    local BG = Instance.new("BillboardGui", workspace)
+    BG.Name = "BG"
+    BG.AlwaysOnTop = true
+    BG.Size = UDim2.new(0, 100, 0, 50)
+    BG.StudsOffset = Vector3.new(0, 1.4, 0)
+    BG.Enabled = enabled
+    local TL = Instance.new("TextLabel", BG)
+    TL.BackgroundTransparency = 1
+    TL.Size = UDim2.new(0, 100, 0, 50)
+    TL.FontFace = Font.fromId(12187376739)
+    TL.Text = text
+    TL.TextSize = 15
+    TL.TextColor3 = color
+    TL.Parent = BG
+    BG.Parent = part
+   else
+    local BG = bg
+    local TL = BG:FindFirstChild("TextLabel")
+    TL.Text = text
+    TL.TextColor3 = color
+    BG.Enabled = enabled
+  end
 end
 function Configs:ESP(Thing, color, text, Num, OnOff)
   if not Thing:FindFirstChild("Highlight") then
