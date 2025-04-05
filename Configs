@@ -1,3 +1,4 @@
+
 local Configs = {}
 function Configs:GS(...)
   return game:GetService(...)
@@ -8,8 +9,8 @@ end
 function Configs:LP()
   return game:GetService("Players").LocalPlayer
 end
-function Configs:RS(callback, mode)
-  return game["Run Service"][mode or "Heartbeat"].Connect(callback)
+function Configs:RS(callback)
+  return game["Run Service"].Heartbeat.Connect(callback)
 end
 function Configs:AddHigh(part, color, Ft, Ot, enabled)
   local hl = part:FindFirstChild("HL")
@@ -118,8 +119,13 @@ function Configs:ESP(Thing, color, text, Num, OnOff)
 end
 function Configs:Loop(mode, callback)
   if mode == "Stepped" then
+    return game["Run Service"].Stepped:Connect(callback)
   elseif mode == "PreRender" then
+    return game["Run Service"].PreRender:Connect(callback)
   elseif mode == "RenderStepped" then
+    return game["Run Service"].RenderStepped:Connect(callback)
   elseif mode == "Heartbeat" then
+    return game["Run Service"].Heartbeat:Connect(callback)
+  end
 end
 return Configs
