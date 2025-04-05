@@ -1,12 +1,61 @@
-
 local Configs = {}
 function Configs:GS(...)
   return game:GetService(...)
 end
-function Configs:RS(callback)
-  return game["Run Service"].Heartbeat.Connect(callback)
+function Configs:Plr()
+  return game:GetService("Players")
 end
-function Configs:AddESP(part, color, text, enabled)
+function Configs:LP()
+  return game:GetService("Players").LocalPlayer
+end
+function Configs:RS(callback, mode)
+  return game["Run Service"][mode or "Heartbeat"].Connect(callback)
+end
+function Configs:AddHigh(part, color, Ft, Ot, enabled)
+  local hl = part:FindFirstChild("HL")
+  if not hl then
+    local HL = Instance.new("Highlight", part)
+    HL.FillColor = color
+    HL.OutlineColor = color
+    HL.FillTransparency = Ft
+    HL.OutlineTransparency = Ot
+    HL.Enabled = enabled
+  else
+    local HL = hl
+    HL.FillColor = color
+    HL.OutlineColor = color
+    HL.FillTransparency = Ft
+    HL.OutlineTransparency = Ot
+    HL.Enabled = enabled
+  end
+end
+function Configs:AddBill(part, color, text, enabled, ttf)
+  local bg = part:FindFirstChild("BG")
+  if not bg then
+    local BG = Instance.new("BillboardGui", workspace)
+    BG.Name = "BG"
+    BG.AlwaysOnTop = true
+    BG.Size = UDim2.new(0, 100, 0, 50)
+    BG.StudsOffset = Vector3.new(0, 1.4, 0)
+    BG.Enabled = enabled
+    local TL = Instance.new("TextLabel", BG)
+    TL.BackgroundTransparency = 1
+    TL.Size = UDim2.new(0, 100, 0, 50)
+    TL.FontFace = Font.fromId(ttf or 12187376739)
+    TL.Text = text
+    TL.TextSize = 15
+    TL.TextColor3 = color
+    TL.Parent = BG
+    BG.Parent = part
+   else
+    local BG = bg
+    local TL = BG:FindFirstChild("TextLabel")
+    TL.Text = text
+    TL.TextColor3 = color
+    BG.Enabled = enabled
+  end
+end
+function Configs:AddESP(part, color, text, enabled, ttf)
   local hl = part:FindFirstChild("HL")
   local bg = part:FindFirstChild("BG")
   if not hl then
@@ -29,7 +78,7 @@ function Configs:AddESP(part, color, text, enabled)
     local TL = Instance.new("TextLabel", BG)
     TL.BackgroundTransparency = 1
     TL.Size = UDim2.new(0, 100, 0, 50)
-    TL.FontFace = Font.fromId(12187376739)
+    TL.FontFace = Font.fromId(ttf or 12187376739)
     TL.Text = text
     TL.TextSize = 15
     TL.TextColor3 = color
@@ -66,5 +115,11 @@ function Configs:ESP(Thing, color, text, Num, OnOff)
    else
     Thing.BillboardGui.Enabled = OnOff
   end
+end
+function Configs:Loop(mode, callback)
+  if mode == "Stepped" then
+  elseif mode == "PreRender" then
+  elseif mode == "RenderStepped" then
+  elseif mode == "Heartbeat" then
 end
 return Configs
