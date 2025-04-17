@@ -1,5 +1,8 @@
-
 local Configs = {}
+local Notification = loadstring(game:HttpGet("https://raw.github.com/f20i30s40h/Notify/main/Notify"))()
+function Configs:Notify(Text1)
+  return Notification:Notify({Title = "FM", Description = Text1},{OutlineColor = Color3.fromRGB(0, 255, 0),Time = 2, Type = "image"},{Image = "rbxassetid://16006928879", ImageColor = Color3.fromRGB(255, 255, 255)})
+end
 function Configs:GS(...)
   return game:GetService(...)
 end
